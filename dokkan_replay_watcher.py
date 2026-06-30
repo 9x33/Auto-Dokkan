@@ -95,6 +95,22 @@ def confirm_ok_visible(path):
     return orange > 0.04 and bright > 0.02 and dialog_dark > 0.35, orange, bright
 
 
+def friend_request_visible(path):
+    _, cancel_orange, cancel_bright, _ = color_stats(path, (0.14, 0.55, 0.48, 0.66))
+    _, ok_orange, ok_bright, _ = color_stats(path, (0.50, 0.55, 0.84, 0.66))
+    red, _, _, _ = color_stats(path, (0.12, 0.43, 0.32, 0.56))
+    _, _, _, dialog_dark = color_stats(path, (0.12, 0.35, 0.88, 0.72))
+    visible = (
+        red > 0.035
+        and cancel_bright > 0.05
+        and cancel_orange < 0.02
+        and ok_orange > 0.04
+        and ok_bright > 0.02
+        and dialog_dark > 0.30
+    )
+    return visible, red, cancel_bright, ok_orange
+
+
 def team_start_visible(path):
     red, orange, bright, _ = color_stats(path, (0.68, 0.84, 0.91, 0.91))
     return red > 0.09, red, bright
@@ -198,6 +214,12 @@ class DokkanWatcher:
     def tick(self, shot):
         capture_window(shot)
 
+        friend, friend_red, cancel_bright, friend_ok_orange = friend_request_visible(shot)
+        if friend:
+            self.set_phase("Friend request")
+            self.click("Friend Request Cancel", 0.32, 0.605, cooldown=2)
+            return
+
         confirm, confirm_orange, _ = confirm_ok_visible(shot)
         if confirm:
             self.set_phase("Confirm stamina")
@@ -229,7 +251,7 @@ class DokkanWatcher:
         self.note(
             "watching "
             f"attempt_red={attempt_red:.3f} confirm_orange={confirm_orange:.3f} "
-            f"team_red={team_red:.3f}"
+            f"friend_red={friend_red:.3f} team_red={team_red:.3f}"
         )
 
     def run(self):

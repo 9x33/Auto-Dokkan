@@ -8,6 +8,7 @@ buttons, and clicks:
 
 - `Attempt Again`
 - confirmation `OK`
+- friend request `Cancel`
 - team-select `Start!`
 
 It also includes a small desktop UI that tracks:
@@ -48,5 +49,6 @@ windows, but the script activates it when it needs to click.
 ## Notes
 
 The detector is tuned for the visible Dokkan flow we tested: mission results,
-stamina confirmation, team select, and mission running. If the game layout
-changes, the click regions or color thresholds may need adjustment.
+stamina confirmation, friend request prompts, team select, and mission running.
+If the game layout changes, the click regions or color thresholds may need
+adjustment.
