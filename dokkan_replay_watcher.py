@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import argparse
 import os
 import queue
 import subprocess
@@ -412,17 +411,7 @@ class WatcherApp:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Watch iPhone Mirroring and replay Dokkan missions.")
-    parser.add_argument("--no-ui", action="store_true", help="run in the terminal without the Tkinter UI")
-    parser.add_argument("--manual-start", action="store_true", help="open the UI without starting the watcher")
-    parser.add_argument("--minutes", type=int, default=0, help="optional runtime limit for --no-ui mode")
-    args = parser.parse_args()
-
-    if args.no_ui:
-        duration = args.minutes * 60 if args.minutes else None
-        DokkanWatcher(duration=duration).run()
-    else:
-        WatcherApp(auto_start=not args.manual_start).run()
+    WatcherApp(auto_start=True).run()
 
 
 if __name__ == "__main__":

@@ -27,30 +27,21 @@ It also includes a small desktop UI that tracks:
 ## Requirements
 
 - macOS with iPhone Mirroring
-- Python 3
-- Pillow
-- Screen Recording and Accessibility permissions for the terminal/app running
-  the script
+- Screen Recording and Accessibility permissions for Auto Dokkan
 
 ## Open The App
 
 Use the download button above, unzip it, drag `Auto Dokkan.app` into
 `Applications`, then open it from Applications.
 
-The UI starts watching automatically. Use the `Stop` button to pause it, or run
-with `--manual-start` if you want the window to open without starting.
+The UI starts watching automatically. Use the `Stop` button to pause it and
+`Start` to resume.
 
 macOS may ask for permissions the first time the app runs:
 
 - Screen Recording, so it can inspect the iPhone Mirroring window
 - Accessibility, so it can click buttons through iPhone Mirroring
 - Automation, so it can activate iPhone Mirroring when a click is needed
-
-To run without the UI:
-
-```bash
-python3 dokkan_replay_watcher.py --no-ui
-```
 
 Keep the iPhone Mirroring window open and connected. It can be behind other
 windows, but the app activates it when it needs to click. If iPhone Mirroring is
@@ -60,15 +51,6 @@ again.
 Auto Dokkan keeps running while its own window is behind other apps or minimized.
 The iPhone Mirroring window can also be behind other apps; it does not need to
 stay in front except for the brief moment when Auto Dokkan sends a click.
-
-## Build The App Download
-
-```bash
-scripts/build_dmg.sh
-```
-
-On a normal Mac this creates `dist/AutoDokkan.dmg`. In restricted environments
-where disk images cannot be created, it still creates `dist/AutoDokkan.zip`.
 
 ## Notes
 

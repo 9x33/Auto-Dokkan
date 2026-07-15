@@ -41,7 +41,7 @@ fi
 import PIL
 PY
 if [[ $? -ne 0 ]]; then
-  alert "Pillow could not be installed. Open Terminal and run: python3 -m pip install Pillow"
+  alert "Pillow could not be installed. Install Python 3 with Pillow, then reopen Auto Dokkan."
   exit 1
 fi
 
