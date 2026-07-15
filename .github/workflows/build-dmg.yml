@@ -1,0 +1,31 @@
+name: Build Auto Dokkan DMG
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build disk image
+        run: scripts/build_dmg.sh
+
+      - name: Publish latest DMG
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git tag -f latest
+          git push origin -f latest
+          gh release delete latest --yes || true
+          gh release create latest dist/AutoDokkan.dmg \
+            --title "Auto Dokkan" \
+            --notes "Download AutoDokkan.dmg, open it, and drag Auto Dokkan.app into Applications."

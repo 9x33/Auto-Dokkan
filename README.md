@@ -3,10 +3,10 @@
 A small macOS automation script for Dragon Ball Z Dokkan Battle running through
 iPhone Mirroring.
 
-[![Download Auto Dokkan App](https://img.shields.io/badge/Download%20Auto%20Dokkan%20App-.zip-2ea44f?style=for-the-badge)](https://github.com/9x33/Auto-Dokkan/raw/main/dist/AutoDokkan.zip)
+[![Download Auto Dokkan App](https://img.shields.io/badge/Download%20Auto%20Dokkan%20App-.dmg-2ea44f?style=for-the-badge)](https://github.com/9x33/Auto-Dokkan/releases/latest/download/AutoDokkan.dmg)
 
-Download the app with the button above, unzip it, then drag `Auto Dokkan.app`
-into `Applications`.
+Download the disk image with the button above, open it, then drag
+`Auto Dokkan.app` into `Applications`.
 
 The watcher captures the iPhone Mirroring window, looks for the mission flow
 buttons, and clicks:
@@ -31,7 +31,7 @@ It also includes a small desktop UI that tracks:
 
 ## Open The App
 
-Use the download button above, unzip it, drag `Auto Dokkan.app` into
+Use the download button above, open the `.dmg`, drag `Auto Dokkan.app` into
 `Applications`, then open it from Applications.
 
 The UI starts watching automatically. Use the `Stop` button to pause it and

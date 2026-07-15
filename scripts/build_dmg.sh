@@ -8,7 +8,6 @@ APP_NAME="Auto Dokkan"
 APP_DIR="$BUILD_DIR/$APP_NAME.app"
 DMG_STAGING="$BUILD_DIR/dmg"
 DMG_PATH="$DIST_DIR/AutoDokkan.dmg"
-ZIP_PATH="$DIST_DIR/AutoDokkan.zip"
 
 rm -rf "$BUILD_DIR"
 mkdir -p "$APP_DIR/Contents/MacOS" "$APP_DIR/Contents/Resources" "$DMG_STAGING" "$DIST_DIR"
@@ -28,18 +27,12 @@ cp -R "$APP_DIR" "$DMG_STAGING/$APP_NAME.app"
 ln -s /Applications "$DMG_STAGING/Applications"
 
 rm -f "$DMG_PATH"
-rm -f "$ZIP_PATH"
 
-if hdiutil create \
+hdiutil create \
   -volname "$APP_NAME" \
   -srcfolder "$DMG_STAGING" \
   -ov \
   -format UDZO \
-  "$DMG_PATH"; then
-  echo "$DMG_PATH"
-else
-  echo "hdiutil could not create a DMG in this environment; creating a zip instead." >&2
-fi
+  "$DMG_PATH"
 
-ditto -c -k --norsrc --keepParent "$DMG_STAGING/$APP_NAME.app" "$ZIP_PATH"
-echo "$ZIP_PATH"
+echo "$DMG_PATH"
