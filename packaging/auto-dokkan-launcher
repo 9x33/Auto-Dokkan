@@ -1,0 +1,48 @@
+#!/bin/zsh
+set -u
+
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
+APP_DIR="${0:A:h:h}"
+RESOURCES_DIR="$APP_DIR/Resources"
+APP_NAME="Auto Dokkan"
+LOG_DIR="$HOME/Library/Logs/Auto Dokkan"
+LOG_FILE="$LOG_DIR/auto-dokkan.log"
+
+mkdir -p "$LOG_DIR"
+cd "$RESOURCES_DIR" || exit 1
+
+alert() {
+  /usr/bin/osascript -e "display alert \"$APP_NAME\" message \"$1\" as warning" >/dev/null 2>&1 || true
+}
+
+PYTHON_BIN="$(command -v python3 || true)"
+if [[ -z "$PYTHON_BIN" ]]; then
+  alert "Python 3 is required to run Auto Dokkan. Install Python 3, then reopen the app."
+  exit 1
+fi
+
+"$PYTHON_BIN" - <<'PY' >/dev/null 2>&1
+import tkinter
+PY
+if [[ $? -ne 0 ]]; then
+  alert "Python Tkinter is required to show the Auto Dokkan UI. Install a Python 3 build with Tkinter, then reopen the app."
+  exit 1
+fi
+
+"$PYTHON_BIN" - <<'PY' >/dev/null 2>&1
+import PIL
+PY
+if [[ $? -ne 0 ]]; then
+  "$PYTHON_BIN" -m pip install --user -r "$RESOURCES_DIR/requirements.txt" >>"$LOG_FILE" 2>&1
+fi
+
+"$PYTHON_BIN" - <<'PY' >/dev/null 2>&1
+import PIL
+PY
+if [[ $? -ne 0 ]]; then
+  alert "Pillow could not be installed. Open Terminal and run: python3 -m pip install Pillow"
+  exit 1
+fi
+
+exec "$PYTHON_BIN" "$RESOURCES_DIR/dokkan_replay_watcher.py" >>"$LOG_FILE" 2>&1

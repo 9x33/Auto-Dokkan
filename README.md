@@ -3,10 +3,10 @@
 A small macOS automation script for Dragon Ball Z Dokkan Battle running through
 iPhone Mirroring.
 
-[![Download Auto Dokkan UI](https://img.shields.io/badge/Download%20Auto%20Dokkan%20UI-main.zip-2ea44f?style=for-the-badge)](https://github.com/9x33/Auto-Dokkan/archive/refs/heads/main.zip)
+[![Download Auto Dokkan App](https://img.shields.io/badge/Download%20Auto%20Dokkan%20App-.zip-2ea44f?style=for-the-badge)](https://github.com/9x33/Auto-Dokkan/raw/main/dist/AutoDokkan.zip)
 
-Download the UI with the button above, unzip it, then double-click
-`Auto Dokkan.command` to open the progress window.
+Download the app with the button above, unzip it, then drag `Auto Dokkan.app`
+into `Applications`.
 
 The watcher captures the iPhone Mirroring window, looks for the mission flow
 buttons, and clicks:
@@ -32,13 +32,19 @@ It also includes a small desktop UI that tracks:
 - Screen Recording and Accessibility permissions for the terminal/app running
   the script
 
-## Open The UI
+## Open The App
 
-Use the download button above, unzip the file, then double-click
-`Auto Dokkan.command`.
+Use the download button above, unzip it, drag `Auto Dokkan.app` into
+`Applications`, then open it from Applications.
 
 The UI starts watching automatically. Use the `Stop` button to pause it, or run
 with `--manual-start` if you want the window to open without starting.
+
+macOS may ask for permissions the first time the app runs:
+
+- Screen Recording, so it can inspect the iPhone Mirroring window
+- Accessibility, so it can click buttons through iPhone Mirroring
+- Automation, so it can activate iPhone Mirroring when a click is needed
 
 To run without the UI:
 
@@ -47,7 +53,22 @@ python3 dokkan_replay_watcher.py --no-ui
 ```
 
 Keep the iPhone Mirroring window open and connected. It can be behind other
-windows, but the script activates it when it needs to click.
+windows, but the app activates it when it needs to click. If iPhone Mirroring is
+closed or the phone disconnects, Auto Dokkan will wait until the window exists
+again.
+
+Auto Dokkan keeps running while its own window is behind other apps or minimized.
+The iPhone Mirroring window can also be behind other apps; it does not need to
+stay in front except for the brief moment when Auto Dokkan sends a click.
+
+## Build The App Download
+
+```bash
+scripts/build_dmg.sh
+```
+
+On a normal Mac this creates `dist/AutoDokkan.dmg`. In restricted environments
+where disk images cannot be created, it still creates `dist/AutoDokkan.zip`.
 
 ## Notes
 
